@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import {useState, useEffect, useCallback} from 'react';
 import {Auth} from "../API/auth";
-// import Toast from 'react-native-simple-toast';
+ import Toast from 'react-native-simple-toast';
 import { Loading } from '../components/modals/Loading';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import * as Font from "expo-font";
@@ -25,7 +25,7 @@ export default function LoginScreen({ navigation }) {
     const [login, setLogin] = useState('');
     const [pass, setPass] = useState('');
     const [loading, setLoading] = useState(false);
-    const [isReady, setIsReady] = useState(false);
+
 
     const [isShowKeyboard, setIsShowKeyboard] = useState(false);
 
@@ -33,45 +33,30 @@ export default function LoginScreen({ navigation }) {
     const [isFocusesPassword, setIsFocusedPassword] = useState(false);
     useEffect(() => {
 
-        // async function prepare() {
-        //     try {
-        //         await Font.loadAsync({
-        //             'Roboto-Regular': require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
-        //             'Roboto-Bold': require('./assets/fonts/Roboto/Roboto-Bold.ttf'),
-        //         });
-        //         await new Promise(resolve => setTimeout(resolve, 2000));
-        //     } catch (e) {
-        //         console.warn(e);
-        //     } finally {
-        //         setIsReady(true);
-        //     }
-        // }
-        //
-        // prepare();
 
-        // async function checker(){
-        //     if (AsyncStorage.getItem('@login') && AsyncStorage.getItem('@pass')){
-        //         setLoading(true);
-        //         const login1 = await AsyncStorage.getItem('@login');
-        //         console.log(login1)
-        //         const pass1 = await AsyncStorage.getItem('@pass');
-        //         console.log(pass1)
-        //         //if (login && pass)
-        //         const tryAuth = await Auth(login1, pass1);
-        //         console.log(3)
-        //         if (tryAuth.status == 'ok'){
-        //         //     await AsyncStorage.setItem('@token', tryAuth.token);
-        //         //     if (await updater())
-        //                 navigation.navigate('Home');
-        //         //     else
-        //         //         Toast.show('Что-то пошло не так...');
-        //         }
-        //         else
-        //             Toast.show('Проблема при авторизации');
-        //         setLoading(false);
-        //     }
-        // }
-        // checker();
+        async function checker(){
+            if (AsyncStorage.getItem('@login') && AsyncStorage.getItem('@pass')){
+                setLoading(true);
+                const login1 = await AsyncStorage.getItem('@login');
+                console.log(login1)
+                const pass1 = await AsyncStorage.getItem('@pass');
+                console.log(pass1)
+                //if (login && pass)
+                const tryAuth = await Auth(login1, pass1);
+                console.log(3)
+                if (tryAuth.status == 'ok'){
+                    await AsyncStorage.setItem('@token', tryAuth.token);
+                //     if (await updater())
+                        navigation.navigate('Home');
+                //     else
+                //         Toast.show('Что-то пошло не так...');
+                }
+                else
+                    Toast.show('Проблема при авторизации');
+                setLoading(false);
+            }
+        }
+        checker();
         const showSubscription = Keyboard.addListener('keyboardDidShow', () => {
             setIsShowKeyboard(true);
         });
@@ -127,20 +112,11 @@ export default function LoginScreen({ navigation }) {
         setIsFocusedPassword(true);
     };
 
-    const onLayoutRootView = useCallback(async () => {
-        if (isReady) {
-            await SplashScreen.hideAsync();
-        }
-    }, [isReady]);
 
-    if (!isReady) {
-        return null;
-    }
 
     return (
         <KeyboardAvoidingView style={styles.container}
-                              behavior={Platform.OS === 'ios' && 'padding'}
-                              onLayout={onLayoutRootView}>
+                              behavior={Platform.OS === 'ios' && 'padding'}>
             <TouchableWithoutFeedback onPress={keyboardHide}>
                 <ImageBackground style={styles.image} source={require('../assets/Photo-BG.jpg')}>
                     <View style={styles.form}>
@@ -209,7 +185,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         marginBottom: 32,
         fontSize: 30,
-        // fontFamily: 'Roboto-Regular',
+        fontFamily: 'Roboto-Regular',
         color: '#212121',
     },
     input: {
@@ -237,7 +213,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         color: '#fff',
         fontSize: 16,
-        // fontFamily: 'Roboto-Regular',
+        fontFamily: 'Roboto-Regular',
     },
 
     image: {
@@ -251,7 +227,7 @@ const styles = StyleSheet.create({
         marginBottom: 35,
         color: '#1B4371',
         fontSize: 16,
-        // fontFamily: 'Roboto-Regular',
+        fontFamily: 'Roboto-Regular',
     },
     navigationLink: {
         marginLeft: 10,

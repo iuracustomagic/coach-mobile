@@ -46,20 +46,19 @@ async function Logout() {
   console.log(token)
   //if (login && pass)
 
-  if (token) {
+
     await AsyncStorage.setItem('@login', '');
     await AsyncStorage.setItem('@pass', '');
     await AsyncStorage.setItem('@token', '');
+    navigation.navigate('Login');
+    // const logout = await LogOut(token)
+    // if (logout.status == "ok") {
+    //
+    //   navigation.navigate('Login');
+    //
+    // } else
+    //   Toast.show('Что-то пошло не так...');
 
-    const logout = await LogOut(token)
-    if (logout.status == "ok") {
-
-      navigation.navigate('Login');
-
-    } else
-      Toast.show('Что-то пошло не так...');
-
-  }
 }
   return (
     <View style={styles.container}>

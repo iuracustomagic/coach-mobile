@@ -6,6 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import LoginScreen from './Screens/LoginScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+// import {AppLoading} from 'expo'
 
 
 import HomeScreen from "./Screens/MainScreen/HomeScreen";
@@ -45,6 +46,19 @@ export default function App() {
     return null;
   }
 
+  // const loadApplication = async () => {
+  //   await Font.loadAsync({
+  //               'Roboto-Regular': require('./assets/fonts/Roboto/Roboto-Regular.ttf'),
+  //               'Roboto-Bold': require('./assets/fonts/Roboto/Roboto-Bold.ttf'),
+  //             }
+  //   )
+  // }
+  //
+  // if (!isReady) {
+  //   return (
+  //       <AppLoading startAsync={loadApplication} onFinish={()=> setIsReady(true)}/>
+  //   )
+  // }
   return (
       <View style={{ flex: 1 }} onLayout={onLayoutRootView}>
         <NavigationContainer>

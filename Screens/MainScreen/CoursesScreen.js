@@ -14,12 +14,10 @@ export default function CoursesScreen() {
       if (AsyncStorage.getItem('@login') && AsyncStorage.getItem('@pass')){
 
         const token = await AsyncStorage.getItem('@token');
-        console.log('Token in Course screen', token)
-        //if (login && pass)
 
         if(token) {
           const courseInfo = await GetCourseInfo(token)
-          console.log(courseInfo['courses'])
+
           setCourses(courseInfo['courses'])
         }
       }
