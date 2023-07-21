@@ -62,6 +62,25 @@ export const GetCourseInfo = async(token) => {
     }
 }
 
+export const GetLessonsList = async(token, course_id) => {
+    try {
+        const resp = await fetch(currentUrl + '/api/courses/course/' + course_id, {
+            method: 'get',
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + token
+            },
+        })
+        // console.log(await resp.json())
+        return await resp.json()
+    } catch (error) {
+        console.log('There has been a problem with your fetch operation: ' + error.message);
+        return {
+            'status': 'got error'
+        }
+    }
+}
+
 export const GetReportInfo = async(token) => {
     try {
         const resp = await fetch(currentUrl + '/api/reports', {

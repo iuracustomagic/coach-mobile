@@ -6,7 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import LoginScreen from './Screens/LoginScreen';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import {AppLoading} from 'expo'
+import CourseViewScreen from "./Screens/MainScreen/CourseViewScreen";
 
 
 import HomeScreen from "./Screens/MainScreen/HomeScreen";
@@ -69,6 +69,12 @@ export default function App() {
             name='Home'
             component={HomeScreen}
           />
+             <Stack.Screen
+                 options={{ headerShown: false }}
+                 name='Course'
+                 component={CourseViewScreen}
+             />
+
         </Stack.Navigator>
 
         </NavigationContainer>

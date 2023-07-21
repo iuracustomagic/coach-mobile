@@ -65,7 +65,7 @@ export default function HomeScreen() {
                     <AntDesign name="areachart" size={size} color={color} />
                 ),
               }}
-              name='Posts'
+              name='Reports'
               component={ReportScreen}
           />
           <MainTab.Screen
@@ -76,7 +76,7 @@ export default function HomeScreen() {
                     <AntDesign name="book" size={size} color={color} />
                 ),
               }}
-              name='CreatePosts'
+              name='Courses'
               component={CoursesScreen}
           />
           <MainTab.Screen

@@ -1,6 +1,7 @@
-import { View, StyleSheet, Text, Image, ImageBackground } from 'react-native';
+import { View, StyleSheet, Text, Image, FlatList, SafeAreaView } from 'react-native';
 import {useEffect, useState} from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Link } from '@react-navigation/native';
 import {GetCourseInfo} from "../../API/api";
 import {currentUrl} from "../../consts/consts";
 
@@ -30,16 +31,19 @@ export default function CoursesScreen() {
       <View style={styles.header}>
         <Text style={styles.title}>Мои курсы</Text>
       </View>
-      <View style={styles.content}>
-      {courses ? courses.map(course => (
-            <View key={course.id} style={styles.courseItem}>
-              <Image style={styles.image} source={{uri: currentUrl + '/' + course.banner.replace("public", "storage")}} />
-              <Text style={styles.courseTitle}>{course.name}</Text>
-            </View>
-      )): <Text style={styles.courseTitle}>У вас нет доступных курсов</Text>
+      <SafeAreaView style={styles.content}>
+        {courses ? <FlatList data={courses} keyExtractor={item => item.id} renderItem={({item}) => (
+                <Link key={item.id} to={{ screen: 'Course', params: { id: item.id } }}>
+                  <View style={styles.courseItem}>
+                    <Image style={styles.image} source={{uri: currentUrl + '/' + item.banner.replace("public", "storage")}} />
+                    <Text style={styles.courseTitle}>{item.name}</Text>
+                  </View>
+                </Link>
+            )}/>
+            : <Text style={styles.lessonTitle}>У вас нет доступных курсов</Text>
+        }
 
-      }
-      </View>
+      </SafeAreaView>
     </View>
   );
 }
@@ -64,25 +68,26 @@ const styles = StyleSheet.create({
   },
   content: {
     flex: 1,
-    flexDirection: 'row',
-    flexWrap: 'wrap',
     justifyContent: 'center',
-    alignItems: 'flex-start',
-    padding: 20,
-
+    alignItems: 'center',
+    paddingTop: 20,
+    paddingBottom: 20,
     backgroundColor: '#e2eed6'
   },
   courseItem: {
+    marginHorizontal: 10,
+    // alignItems: 'center',
     // justifyContent: 'center',
-    paddingBottom: 20,
+    paddingBottom: 10,
   },
   image: {
-    width: '100%',
-    height: 150,
+    width: 220,
+    height: 180,
     marginBottom: 10,
     resizeMode: 'contain'
   },
   courseTitle: {
+    width: 220,
     fontSize: 20,
     textAlign: 'center',
   },
